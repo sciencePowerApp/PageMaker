@@ -5,7 +5,6 @@
 <means_sds_r_n type="question" yes="d_from_t_for_correlated_samples" no="correlated_or_dependent_samples">Do you have the M's, SD's, r, and N?</means_sds_r_n>
 
 
-
 <Ftest>
 	<question>Is the comparison between correlated samples?</question>
 	

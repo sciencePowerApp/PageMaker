@@ -56,6 +56,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		#end
 		
 		#if flash
@@ -66,6 +67,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("xml/d_from_t_for_correlated_samples.xml", AssetType.TEXT);
 		className.set ("xml/main.xml", __ASSET__xml_main_xml);
 		type.set ("xml/main.xml", AssetType.TEXT);
+		className.set ("xml/means_sds_n.xml", __ASSET__xml_means_sds_n_xml);
+		type.set ("xml/means_sds_n.xml", AssetType.TEXT);
 		
 		
 		#elseif html5
@@ -80,6 +83,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.TEXT);
 		id = "xml/main.xml";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "xml/means_sds_n.xml";
 		path.set (id, id);
 		
 		type.set (id, AssetType.TEXT);
@@ -109,6 +116,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("xml/main.xml", __ASSET__xml_main_xml);
 		type.set ("xml/main.xml", AssetType.TEXT);
+		
+		className.set ("xml/means_sds_n.xml", __ASSET__xml_means_sds_n_xml);
+		type.set ("xml/means_sds_n.xml", AssetType.TEXT);
 		
 		
 		if (useManifest) {
@@ -830,9 +840,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__xml_correlated_or_dependent_samples_xml extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__xml_d_from_t_for_correlated_samples_xml extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__xml_main_xml extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__xml_means_sds_n_xml extends flash.utils.ByteArray { }
 
 
 #elseif html5
+
 
 
 
@@ -849,6 +861,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/xml/correlated_or_dependent_samples.xml") #if display private #end class __ASSET__xml_correlated_or_dependent_samples_xml extends lime.utils.ByteArray {}
 @:file("assets/xml/d_from_t_for_correlated_samples.xml") #if display private #end class __ASSET__xml_d_from_t_for_correlated_samples_xml extends lime.utils.ByteArray {}
 @:file("assets/xml/main.xml") #if display private #end class __ASSET__xml_main_xml extends lime.utils.ByteArray {}
+@:file("assets/xml/means_sds_n.xml") #if display private #end class __ASSET__xml_means_sds_n_xml extends lime.utils.ByteArray {}
 
 
 

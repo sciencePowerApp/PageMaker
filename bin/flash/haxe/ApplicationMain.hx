@@ -42,6 +42,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.TEXT);
 		
 		
+		urls.push ("xml/means_sds_n.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
 		
 		if (config.assetsPrefix != null) {
 			
@@ -102,7 +106,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "181",
+			build: "185",
 			company: "",
 			file: "PageMaker",
 			fps: 60,
