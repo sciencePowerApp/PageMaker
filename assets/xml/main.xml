@@ -1,0 +1,10 @@
+<page1>blabla</page1>
+<page2>
+	<question yes="page1" no="page2" />
+	<button goto="page2"/>
+	<input/>
+	<input id="1"/>
+	<input id="a"/>
+	<calculate variables="a,b"/>
+	<b></b>
+</page2>
