@@ -106,7 +106,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "185",
+			build: "191",
 			company: "",
 			file: "PageMaker",
 			fps: 60,

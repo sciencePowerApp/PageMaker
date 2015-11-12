@@ -12,19 +12,19 @@
 			<input id="n1" default="10">n group 1</input>	
 			<input id="n2" default="10">n group 2</input>	
 			
-			<calculation variables="" formula="(m1-m2)-T.INV.2T(0.05,(n1+n2-2))*SQRT((Math.pow(sd1,2(/n1)+(Math.pow(sd2,2)/n2))">95% CI Mdiff [Low]</calculation>
-			<calculation variables="" formula="(m1-m2)+T.INV.2T(0.05,(n1+n2-2))*SQRT((Math.pow(sd1,2)/n1)+(Math.pow(sd2,2)/n2))">95% CI Mdiff [High]</calculation>
+			<calculation variables="m1,m2,n1,n2,sd1,sd2" formula="(m1-m2)-Distribution.Studentt(0.05,(n1+n2-2))*Math.sqrt((Math.pow(sd1,2(/n1)+(Math.pow(sd2,2)/n2))">95% CI Mdiff [Low]</calculation>
+			<calculation variables="m1,m2,n1,n2,sd1,sd2" formula="(m1-m2)+Distribution.Studentt(0.05,(n1+n2-2))*Math.sqrt((Math.pow(sd1,2)/n1)+(Math.pow(sd2,2)/n2))">95% CI Mdiff [High]</calculation>
 			
-			<calculation variables="" id="cohends" " formula="ABS((m1-m2)/(Math.sqrt((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2-2))))">Cohen's d<sub>s</sub></calculation>
-			<calculation variables="" formula="ABS((m1-m2)/(Math.sqrt((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2))))">Cohen's d</calculation>
+			<calculation variables="m1,m2,n1,n2" id="cohends" formula="Math.abs((m1-m2)/(Math.sqrt((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2-2))))">Cohen's d<sub>s</sub></calculation>
+			<calculation variables="m1,m2,n1,n2,sd1,sd2" formula="Math.abs((m1-m2)/(Math.sqrt((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2))))">Cohen's d</calculation>
 			
-			<calculation variables="" formula="(m1-m2)/(Math.sqrt(((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2-2))*((1/n1+1/n2))))">t</calculation>
-			<calculation variables="" formula="cohends*(1-(3/(4*(n2+n1-2)-1)))">Hedges's g<sub>s</sub></calculation>
+			<calculation variables="m1,m2,n1,n2,sd1,sd2" id="t" formula="(m1-m2)/(Math.sqrt(((((n1-1)*Math.pow(sd1,2))+((n2-1)*Math.pow(sd2,2)))/(n1+n2-2))*((1/n1+1/n2))))">t</calculation>
+			<calculation variables="n1,n2" formula="cohends*(1-(3/(4*(n2+n1-2)-1)))">Hedges's g<sub>s</sub></calculation>
 			
-			<calculation variables="" id="df" formula="(n1+n2-2)">df</calculation>
-			<calculation variables="" formula="NORMSDIST(Math.abs(m1-m2)/Math.sqrt(Math.pow(sd1,2)+Math.pow(sd2,2)))">CL effect size</calculation>
+			<calculation variables="n1,n2" id="df" formula="(n1+n2-2)">df</calculation>
+			<calculation variables="m1,m2,sd1,sd2" formula="NORMSDIST(Math.abs(m1-m2)/Math.sqrt(Math.pow(sd1,2)+Math.pow(sd2,2)))">CL effect size</calculation>
 			
-			<calculation variables="" formula="TDIST(ABS(t), df,2)">p</calculation>			
+			<calculation variables="t,df" formula="TDIST(ABS(t), df,2)">p</calculation>			
 			
 			
 		</grid>
