@@ -54,10 +54,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		#end
 		
 		#if flash
 		
+		className.set ("xml/correlated_or_dependent_samples.xml", __ASSET__xml_correlated_or_dependent_samples_xml);
+		type.set ("xml/correlated_or_dependent_samples.xml", AssetType.TEXT);
+		className.set ("xml/d_from_t_for_correlated_samples.xml", __ASSET__xml_d_from_t_for_correlated_samples_xml);
+		type.set ("xml/d_from_t_for_correlated_samples.xml", AssetType.TEXT);
 		className.set ("xml/main.xml", __ASSET__xml_main_xml);
 		type.set ("xml/main.xml", AssetType.TEXT);
 		
@@ -65,6 +71,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#elseif html5
 		
 		var id;
+		id = "xml/correlated_or_dependent_samples.xml";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
+		id = "xml/d_from_t_for_correlated_samples.xml";
+		path.set (id, id);
+		
+		type.set (id, AssetType.TEXT);
 		id = "xml/main.xml";
 		path.set (id, id);
 		
@@ -86,6 +100,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		#if (windows || mac || linux)
 		
 		var useManifest = false;
+		
+		className.set ("xml/correlated_or_dependent_samples.xml", __ASSET__xml_correlated_or_dependent_samples_xml);
+		type.set ("xml/correlated_or_dependent_samples.xml", AssetType.TEXT);
+		
+		className.set ("xml/d_from_t_for_correlated_samples.xml", __ASSET__xml_d_from_t_for_correlated_samples_xml);
+		type.set ("xml/d_from_t_for_correlated_samples.xml", AssetType.TEXT);
 		
 		className.set ("xml/main.xml", __ASSET__xml_main_xml);
 		type.set ("xml/main.xml", AssetType.TEXT);
@@ -807,10 +827,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if !display
 #if flash
 
+@:keep @:bind #if display private #end class __ASSET__xml_correlated_or_dependent_samples_xml extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__xml_d_from_t_for_correlated_samples_xml extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__xml_main_xml extends flash.utils.ByteArray { }
 
 
 #elseif html5
+
+
 
 
 
@@ -822,6 +846,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux || cpp)
 
 
+@:file("assets/xml/correlated_or_dependent_samples.xml") #if display private #end class __ASSET__xml_correlated_or_dependent_samples_xml extends lime.utils.ByteArray {}
+@:file("assets/xml/d_from_t_for_correlated_samples.xml") #if display private #end class __ASSET__xml_d_from_t_for_correlated_samples_xml extends lime.utils.ByteArray {}
 @:file("assets/xml/main.xml") #if display private #end class __ASSET__xml_main_xml extends lime.utils.ByteArray {}
 
 

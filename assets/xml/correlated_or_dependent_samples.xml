@@ -1,0 +1,7 @@
+<correlated_or_dependent_samples>
+	<text>d<sub>z</sub> from t for correlated samples</text>
+	<input id="n" default="10">n pairs</input>
+	<input id="t" default="4.74341649">t-value</input>
+	<calculation variables="t,n" formula="t/Math.sqrt(n)">cohen's d<sub>z</sub></calculation>
+	<calculation variables="t,n" >CL effect size</calculation>
+</correlated_or_dependent_samples>

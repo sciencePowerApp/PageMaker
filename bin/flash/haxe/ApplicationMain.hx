@@ -30,6 +30,14 @@ class ApplicationMain {
 		var types = [];
 		
 		
+		urls.push ("xml/correlated_or_dependent_samples.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("xml/d_from_t_for_correlated_samples.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
 		urls.push ("xml/main.xml");
 		types.push (lime.Assets.AssetType.TEXT);
 		
@@ -94,7 +102,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "116",
+			build: "181",
 			company: "",
 			file: "PageMaker",
 			fps: 60,

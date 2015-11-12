@@ -20,9 +20,12 @@ class Main extends Sprite
 		var dict:Map<String,Xml> = xml_Service.get();
 		
 		
+		
+		
 		var pages:Map<String,PageInfo> = new Map<String,PageInfo>();
 		
 		for (key in dict.keys()) {
+			expandQs(dict[key]);
 			addPages(key, pages, dict[key]);
 		}
 		
@@ -39,6 +42,37 @@ class Main extends Sprite
 		}	
 	}
 	
+	function expandQs(xml:Xml) {
+		var type:String;
+		for (child in xml.elements()) {
+			if (child.exists('type')) {
+				type = child.get('type');
+				child.remove('type');
+				switch(type) {
+					case 'question':
+						pageToQuestion(child);
+				}
+					
+				
+				
+			}
+		}
+	}
+	
+	function pageToQuestion(child:Xml) {
+		var xml:Xml = Xml.createElement('question');
+		var val:String;
+		for (attrib in child.attributes()) {
+			val = child.get(attrib);
+			xml.set(attrib, val);
+			child.remove(attrib);
+		}
+		val = child.firstChild().nodeValue;
+		child.firstChild().nodeValue = '';
+		child.addChild(xml);
+		
+	}
+	
 	
 	
 
@@ -46,7 +80,7 @@ class Main extends Sprite
 
 enum PermittedTypes{
 	button;
-	calculate;
+	calculation;
 	input;
 	question;
 	text;	
@@ -92,28 +126,33 @@ class PageInfo {
 	public function checkQuestions(pages:Map<String, PageInfo>) {
 		
 		var gotos;
+		var page:String;
 		
 		for (question in permittedElements['question']) {
 			gotos = question.attributes();
 			for (goto in gotos) {
-				if (pages.exists(goto.toString()) == false) err("A question has an answer that takes you to an unknown page ("+goto.toString()+")");
+				page = question.get(goto);
+				if (pages.exists(page) == false) err("A question has an answer that takes you to an unknown page ("+goto.toString()+" => "+page+")");
 			}	
 		}
 	}
 	
-	public function checkPermittedTypes() {
+	public function checkPermittedTypes(_xml:Xml = null) {
 	
-		permittedElements = new Map<String,Array<Xml>>();
-				
-		for (type in PermittedTypes.createAll()) {
-			permittedElements[type.getName()] = new Array<Xml>();
+		if (_xml == null) {
+			_xml = xml;
+			permittedElements = new Map<String,Array<Xml>>();				
+			for (type in PermittedTypes.createAll()) {
+				permittedElements[type.getName()] = new Array<Xml>();
+			}
 		}
 		
+		
 		var nodeNam:String;
-		for (node in xml.elements()) {
+		for (node in _xml.elements()) {
 			nodeNam = node.nodeName.toLowerCase();
-			if (permittedElements[nodeNam] == null) err("There is an unknown element type of " + nodeNam);
-			else permittedElements[nodeNam].push( node );
+			if (permittedElements[nodeNam] != null) permittedElements[nodeNam].push( node ); //ignore haxeUI node types
+			checkPermittedTypes(node); // iterate down
 		}
 	}
 	
@@ -123,12 +162,23 @@ class PageInfo {
 			if (input.exists("id") == false) err("There is an input set with no id");
 			else { 
 				id = input.get('id');
-				if (legalName.match(id) == false) err("Illegal characters used as an input's id (" + id + ")");
-				else {
+				//if (legalName.match(id) == false) err("Illegal characters used as an input's id (" + id + ")");
+				//else {
 					if (variables.indexOf(id) == -1) variables.push(id);
 					else {
 						err("More than 1 input with the same name ("+id+") ");
 					}
+				//}
+			}
+		}
+		
+		//add inputs calculated from calculation
+		for (calculation in permittedElements['calculation']) {
+			if (calculation.exists('id')) {
+				id = calculation.get('id');
+				if (variables.indexOf(id) == -1) variables.push(id);
+				else {
+					err("More than 1 input (this time, a secondary calculated input: "+calculation+") with the same name ("+id+") ");
 				}
 			}
 		}
@@ -138,17 +188,18 @@ class PageInfo {
 	public function checkCalculates() 
 	{
 		var formulaVariables:Array<String>;
-		for (input in permittedElements['calculate']) {
+		for (input in permittedElements['calculation']) {
 			if (input.exists('variables')) {
 				formulaVariables = input.get("variables").split(",");
 				
 				for (f_var in formulaVariables) {
 					if (variables.indexOf(f_var) == -1) {
-						err("A Calculate needs a variable ("+f_var+") that does not exist on a given page");
+						err("A Calculation needs a variable ("+f_var+") that does not exist on a given page");
 					}
 				}
 				
 			}
+			if (input.exists('formula') == false) err("No formula defined for "+input	);
 		}
 	}
 	

@@ -1,0 +1,32 @@
+<d_from_t_for_correlated_samples>
+	<text>Correlated (or Dependent) Samples</text>
+	<input id="m1" default="8.7">Mean 1</input>
+	<input id="m2" default="7.7">Mean 2</input>
+	<input id="SD1" default="0.823272602">SD 1</input>
+	<input id="SD2" default="0.948683298">SD 2</input>
+	<input id="n" default="10">n pairs</input>
+	<input id="r" default="0.72554232">r</input>
+	
+	<calculation id="Mdiff" variables="m1,m2" formula="Math.abs(m1-m2)">M<sub>diff</sub></calculation>
+	<calculation id="cohenDz" variables="r,Mdiff" formula="Mdiff*Math.sqrt(2*(1-r))">cohen's d<sub>z</sub></calculation>
+	
+	<calculation id="Sdiff" variables="SD1,SD2" formula="Math.sqrt(Math.pow(SD1,2)+Math.pow(SD2,2)-2*r*SD1*SD2)">S<sub>diff</sub></calculation>
+	<calculation variables="r,cohenDz" formula="cohenDz*Math.sqrt(2*(1-r))">cohen's d<sub>rm</sub></calculation>
+	<calculation id="SEdiff" variables="r,SD1,SD2,r" formula="Math.sqrt(((Math.pow(SD1,2)/n)+(Math.pow(SD2,2)/n))-(2*r*(SD1/Math.sqrt(n))*(SD2/Math.sqrt(n))))">SE<sub>diff</sub></calculation>
+	<calculation variables="Mdiff,SD1,SD2" formula="Mdiff/Math.sqrt(((Math.pow(SD1,2)+Math.pow(SD2,2))/2))">Hedges g<sub>rm</sub></calculation>
+	
+	<calculation variables="Mdiff,SEdiff,n" formula="Mdiff-SEdiff*Distribution.Studentt(0.05,(n-1))">95% CI Mdiff [Low]</calculation>
+	<calculation variables="Mdiff,SEdiff,n" formula="Mdiff+SEdiff*Distribution.Studentt(0.05,(n-1))">95% CI Mdiff [High]</calculation>
+	<calculation id="cohenDav" variables="Mdiff,m1,m2" formula="Mdiff/Math.sqrt(((m1^2+m2^2)/2))">Cohen's d<sub>av</sub></calculation>
+	<calculation variables="cohenDav,n" formula="cohenDav*(1-(3/(4*(n-1)-1)))">Hedges d<sub>av</sub></calculation>
+	
+	<calculation id="t" variables="Mdiff,Sdiff,n" formula="Mdiff/(Sdiff/Math.sqrt(n))">t</calculation>
+	<calculation id="df" variables="n" formula="(n-1)">df</calculation>
+	<calculation variables="t,df" formula="TDIST(Math.abs(t), df,2)">p</calculation>
+	<calculation variables="m1,m2,n,cohenDav" formula="if(ABS((ABS((m1-m2)/(Math.sqrt((((n-1)*m1^2)+((n-1)*m2^2))/(n+n-2)))))-V11)<ABS((ABS((m1-m2)/(Math.sqrt((((n-1)*m1^2)+((n-1)*m2^2))/(n+n-2)))))-cohenDav),'Grm','Gav')">Recommended:</calculation>
+	<calculation variables="Mdiff,Sdiff" formula="NORMSDIST(Mdiff/Sdiff)">CL effect size</calculation>
+	
+	<text>Reporting Example: Mean 1 was higher (M = 8.7, SD = 0.82) than Mean 2 (M = 7.7, SD = 0.95),  t(9) = 4.74, p = .001, 95% CI [0.52, 1.48], Hedges’s gav = 1.03 95% CI [0.50, 1.72]. The CL effect size indicates that after controlling for individual differences, the likelihood that a person scores higher for Mean 1 than for Mean 2 is 93%.</text>
+
+	
+</d_from_t_for_correlated_samples>
